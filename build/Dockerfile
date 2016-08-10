@@ -1,0 +1,45 @@
+FROM debian:jessie
+MAINTAINER DST Academy <support@dst.academy>
+
+# Set build arguments.
+ARG FILEBEAT_VERSION=1.2.3
+ARG GOSU_VERSION=1.9
+
+# Add our user/group first to ensure their IDs get set consistently.
+RUN groupadd -r filebeat && useradd -r -g filebeat filebeat
+
+# Install everything.
+RUN set -x \
+
+	# Install dependencies.
+	&& apt-get update \
+	&& apt-get install -y --no-install-recommends wget ca-certificates \
+	&& rm -rf /var/lib/apt/lists/* \
+
+	# Install gosu.
+	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
+	&& wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
+	&& export GNUPGHOME="$(mktemp -d)" \
+	&& gpg --keyserver ha.pool.sks-keyservers.net --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4 \
+	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
+	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
+	&& chmod +x /usr/local/bin/gosu \
+	&& gosu nobody true \
+
+	# Install filebeat.
+	&& mkdir -p /opt/filebeat \
+	&& wget -qO- "https://download.elastic.co/beats/filebeat/filebeat-$FILEBEAT_VERSION-x86_64.tar.gz" | tar --strip-components=1 -xzvC /opt/filebeat \
+	&& chmod +x /opt/filebeat/filebeat \
+	&& ln -s /opt/filebeat/filebeat /usr/local/bin \
+
+	# Clean up.
+	&& apt-get purge -y --auto-remove wget ca-certificates \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Copy entrypoint script.
+COPY /docker-entrypoint.sh /
+
+# Set entrypoint and default command.
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["filebeat", "-e"]
