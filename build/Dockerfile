@@ -2,7 +2,7 @@ FROM debian:jessie
 MAINTAINER DST Academy <support@dst.academy>
 
 # Set build arguments.
-ARG FILEBEAT_VERSION=1.2.3
+ARG FILEBEAT_VERSION=1.3.0
 ARG GOSU_VERSION=1.9
 
 # Add our user/group first to ensure their IDs get set consistently.
