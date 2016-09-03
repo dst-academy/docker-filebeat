@@ -15,7 +15,6 @@ RUN set -x \
 	# Install dependencies.
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends wget ca-certificates \
-	&& rm -rf /var/lib/apt/lists/* \
 
 	# Install gosu.
 	&& wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
