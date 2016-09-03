@@ -3,10 +3,11 @@ MAINTAINER DST Academy <support@dst.academy>
 
 # Set build arguments.
 ARG FILEBEAT_VERSION=1.3.0
+ARG FILEBEAT_USER="filebeat"
 ARG GOSU_VERSION=1.9
 
 # Add our user/group first to ensure their IDs get set consistently.
-RUN groupadd -r filebeat && useradd -r -g filebeat filebeat
+RUN groupadd -r $FILEBEAT_USER && useradd -r -g $FILEBEAT_USER $FILEBEAT_USER
 
 # Install everything.
 RUN set -x \
