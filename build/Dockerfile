@@ -41,5 +41,6 @@ RUN set -x \
 COPY /docker-entrypoint.sh /
 
 # Set entrypoint and default command.
+USER $FILEBEAT_USER
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["filebeat", "-e"]
