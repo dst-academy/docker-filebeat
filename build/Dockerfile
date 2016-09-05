@@ -26,10 +26,12 @@ RUN set -x \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Set user.
+USER $FILEBEAT_USER
+
 # Copy entrypoint script.
 COPY /docker-entrypoint.sh /
 
 # Set entrypoint and default command.
-USER $FILEBEAT_USER
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["filebeat", "-e"]
