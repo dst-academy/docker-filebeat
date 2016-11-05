@@ -2,7 +2,7 @@ FROM debian:jessie
 MAINTAINER DST Academy <support@dst.academy>
 
 # Set build arguments.
-ARG FILEBEAT_VERSION=1.3.0
+ARG FILEBEAT_VERSION=5.0.0
 ARG FILEBEAT_USER="filebeat"
 
 # Add our user/group first to ensure their IDs get set consistently.
@@ -18,7 +18,7 @@ RUN set -x \
 
 	# Install filebeat.
 	&& mkdir -p /opt/filebeat \
-	&& wget -qO- "https://download.elastic.co/beats/filebeat/filebeat-$FILEBEAT_VERSION-x86_64.tar.gz" | tar --strip-components=1 -xzvC /opt/filebeat \
+	&& wget -qO- "https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-$FILEBEAT_VERSION-linux-x86_64.tar.gz" | tar --strip-components=1 -xzvC /opt/filebeat \
 	&& chmod +x /opt/filebeat/filebeat \
 	&& ln -s /opt/filebeat/filebeat /usr/local/bin \
 
