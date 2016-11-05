@@ -29,7 +29,6 @@ RUN set -x \
 
 # Copy entrypoint script.
 COPY /docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
 
 # Set entrypoint and default command.
 USER $FILEBEAT_USER
