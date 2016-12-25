@@ -2,7 +2,7 @@ FROM debian:jessie
 MAINTAINER DST Academy <support@dst.academy>
 
 # Set build arguments.
-ARG FILEBEAT_VERSION=5.0.0
+ARG FILEBEAT_VERSION=5.1.1
 ARG FILEBEAT_USER="filebeat"
 
 # Add our user/group first to ensure their IDs get set consistently.
