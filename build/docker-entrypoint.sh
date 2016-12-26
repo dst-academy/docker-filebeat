@@ -8,5 +8,12 @@ if [ "${1:0:1}" = '-' ]; then
 	set -- filebeat "$@"
 fi
 
+# Handle running the filebeat command.
+if [ "$1" = 'filebeat' ]; then
+
+	# Run via filebeat user.
+	set -- gosu $FILEBEAT_USER "$@"
+fi
+
 # Execute the command.
 exec "$@"
