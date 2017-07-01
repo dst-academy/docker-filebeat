@@ -2,6 +2,9 @@
 
 ## [next]
 
+### Changed
+- Update filebeat to version 5.4.3.
+
 ## [0.2.1]
 
 ### Changed
