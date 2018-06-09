@@ -2,6 +2,10 @@
 
 ## [next]
 
+### Changed
+- Update filebeat to version 6.2.4.
+- Use `dstacademy/gosu:0.1` as base image.
+
 ## [0.2.2]
 
 ### Changed
